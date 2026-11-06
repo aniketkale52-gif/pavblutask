@@ -145,7 +145,8 @@ export default function Header() {
         {/* Desktop mega menu: a rounded card that drops down from the header */}
         <div className={`${styles.mega} ${openId ? styles.megaOpen : ""}`}>
           <div className="container">
-            <div className={styles.card} style={{ height: openId ? cardHeight : 0 }}>
+            {/* Height always matches the visible section; it only animates when switching sections */}
+            <div className={styles.card} style={cardHeight ? { height: cardHeight } : undefined}>
               {MENUS.map((menu) => {
                 const visible = menu.id === shownId;
                 return (
