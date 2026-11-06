@@ -21,9 +21,11 @@
   height: auto;
 }
 
+/* Links band: white fill at 4% opacity (as in the Figma) so the row doesn't feel empty */
 .links {
   margin-top: 40px;
   border-block: 1px solid rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.04);
 }
 
 .links ul {
