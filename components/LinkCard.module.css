@@ -1,0 +1,130 @@
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 24px;
+  aspect-ratio: 1 / 1;
+  padding: 28px;
+  border-radius: var(--radius-md);
+  color: var(--white);
+  overflow: hidden;
+  isolation: isolate;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+/* Subtle light sweep on hover */
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: radial-gradient(120% 80% at 100% 0%, rgba(255, 255, 255, 0.16), transparent 60%);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.blue {
+  background: var(--blue-600);
+}
+
+.navy {
+  background: var(--navy-800);
+}
+
+/* Lift on hover only where there is a real pointer (no "stuck" hover after a tap on phones) */
+@media (hover: hover) {
+  .card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 18px 40px rgba(1, 7, 41, 0.22);
+  }
+
+  .card:hover::before {
+    opacity: 1;
+  }
+}
+
+.card:focus-visible {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 40px rgba(1, 7, 41, 0.22);
+}
+
+.card:focus-visible::before {
+  opacity: 1;
+}
+
+.top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.icon :global(img),
+.icon svg {
+  width: 30px;
+  height: 30px;
+}
+
+.arrow {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--white);
+  color: var(--navy-800);
+  opacity: 0;
+  transform: scale(0.8);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.card:hover .arrow,
+.card:focus-visible .arrow {
+  opacity: 1;
+  transform: none;
+}
+
+/* Touch screens have no hover, so show the arrow there */
+@media (hover: none) {
+  .arrow {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.bottom {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.logo {
+  width: 150px;
+  height: auto;
+}
+
+.body {
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.55;
+  letter-spacing: 0.02em;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.bodyStrong {
+  font-weight: 700;
+  color: var(--white);
+}
+
+@media (max-width: 639px) {
+  .card {
+    aspect-ratio: auto;
+    min-height: 220px;
+  }
+}

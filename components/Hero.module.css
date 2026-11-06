@@ -1,0 +1,165 @@
+/* Sky background: the exported Figma image (public/images/hero-sky.jpg) sits on top of a
+   CSS sky gradient, so the hero still looks right before the image is added. */
+.hero {
+  position: relative;
+  overflow: hidden;
+  background:
+    url("/images/hero-sky.jpg") center / cover no-repeat,
+    radial-gradient(60% 30% at 18% 72%, rgba(255, 255, 255, 0.55), transparent 70%),
+    radial-gradient(45% 22% at 82% 30%, rgba(255, 255, 255, 0.45), transparent 70%),
+    radial-gradient(70% 28% at 60% 95%, rgba(255, 255, 255, 0.7), transparent 70%),
+    linear-gradient(180deg, #3f86d0 0%, #79b0e4 45%, #b9d6f1 80%, #dbe9f7 100%);
+}
+
+.inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto 1fr auto;
+  min-height: 812px;
+  padding-block: 116px 86px;
+}
+
+.copy {
+  grid-column: 1 / -1;
+  position: relative;
+  z-index: 1;
+}
+
+.title {
+  font-size: clamp(38px, 4.2vw, 60px);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  color: var(--white);
+  text-shadow: 0 2px 24px rgba(13, 26, 74, 0.18);
+}
+
+.subtitle {
+  margin-top: 12px;
+  font-size: clamp(18px, 2vw, 28px);
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  color: var(--white);
+}
+
+/* Product layer: vial + syringe cut-out with a CSS shadow underneath */
+.product {
+  grid-column: 1 / -1;
+  align-self: center;
+  justify-self: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: clamp(200px, 22vw, 320px);
+  margin-top: -32px;
+  perspective: 1100px;
+  --hover: 8s;
+}
+
+/* Slow hover with a gentle 3D sway, like a card held in the air */
+.float {
+  position: relative;
+  width: 100%;
+  transform-style: preserve-3d;
+  transform-origin: 50% 70%;
+  will-change: transform;
+  animation: hover var(--hover) ease-in-out infinite;
+}
+
+.vial {
+  width: 100%;
+  height: auto;
+}
+
+/* Soft, light contact shadow (blue-tinted so it sits naturally on the sky).
+   It breathes with the hover: smaller and fainter when the vial is higher. */
+.shadow {
+  width: 70%;
+  height: 22px;
+  margin-top: 12px;
+  border-radius: 50%;
+  background: radial-gradient(
+    closest-side,
+    rgba(29, 49, 104, 0.26),
+    rgba(29, 49, 104, 0.12) 50%,
+    rgba(29, 49, 104, 0.04) 78%,
+    rgba(29, 49, 104, 0)
+  );
+  filter: blur(5px);
+  will-change: transform, opacity;
+  animation: shadow var(--hover) ease-in-out infinite;
+}
+
+/* Same waypoints for the vial and the shadow so they stay in sync */
+@keyframes hover {
+  0%,
+  100% {
+    transform: translateY(-6px) rotateZ(-1.5deg) rotateY(-7deg) rotateX(2deg);
+  }
+  25% {
+    transform: translateY(-18px) rotateZ(0.5deg) rotateY(3deg) rotateX(-2deg);
+  }
+  50% {
+    transform: translateY(-11px) rotateZ(2deg) rotateY(8deg) rotateX(1deg);
+  }
+  75% {
+    transform: translateY(-2px) rotateZ(0deg) rotateY(-2deg) rotateX(-1deg);
+  }
+}
+
+@keyframes shadow {
+  0%,
+  100% {
+    transform: translateX(-2px) scale(0.94);
+    opacity: 0.85;
+  }
+  25% {
+    transform: translateX(1px) scale(0.84);
+    opacity: 0.6;
+  }
+  50% {
+    transform: translateX(3px) scale(0.89);
+    opacity: 0.72;
+  }
+  75% {
+    transform: translateX(0) scale(0.99);
+    opacity: 0.95;
+  }
+}
+
+.lead {
+  grid-column: 2;
+  justify-self: end;
+  max-width: 474px;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.55;
+  color: var(--navy-600);
+}
+
+@media (max-width: 899px) {
+  .inner {
+    grid-template-columns: 1fr;
+    min-height: 0;
+    padding-block: 56px 48px;
+    gap: 24px;
+  }
+
+  .product {
+    margin-top: 8px;
+    width: clamp(180px, 52vw, 260px);
+  }
+
+  .lead {
+    grid-column: 1;
+    justify-self: stretch;
+    max-width: none;
+    padding: 20px;
+    border-radius: var(--radius-md);
+    background: rgba(255, 255, 255, 0.72);
+    backdrop-filter: blur(6px);
+    font-size: 16px;
+  }
+}

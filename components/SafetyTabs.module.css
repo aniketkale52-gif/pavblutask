@@ -1,0 +1,187 @@
+.section {
+  padding-block: 88px 96px;
+  --tab-duration: 8s;
+}
+
+.tabs {
+  margin-top: 32px;
+  border: 1px solid var(--grey-100);
+}
+
+.tablist {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  background: var(--white);
+}
+
+.tab {
+  position: relative;
+  padding: 20px 20px 18px;
+  border: 0;
+  border-left: 1px solid var(--grey-100);
+  background: transparent;
+  color: var(--grey-600);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  text-align: left;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.tab:first-child {
+  border-left: 0;
+}
+
+.tab:hover {
+  color: var(--grey-900);
+}
+
+.tab[aria-selected="true"] {
+  color: var(--blue-600);
+  font-weight: 600;
+}
+
+/* Progress line along the top edge of each tab */
+.track {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -1px;
+  height: 2px;
+  background: transparent;
+  overflow: hidden;
+}
+
+.tab[aria-selected="true"] .track {
+  background: var(--grey-100);
+}
+
+.fill {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--blue-600);
+  transform: scaleX(0);
+  transform-origin: left;
+  animation: progress var(--tab-duration) linear forwards;
+}
+
+/* Hovering or focusing the tabs pauses the timer so the copy can be read */
+.paused .fill {
+  animation-play-state: paused;
+}
+
+@keyframes progress {
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/* Panels are stacked; the active one fades/slides in while the old one fades out.
+   The wrapper's height animates between panels (set from JS). */
+.panels {
+  position: relative;
+  overflow: hidden;
+  background: var(--blue-100);
+  transition: height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.panel {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 28px 32px 32px;
+  opacity: 0;
+  transform: translateY(10px);
+  visibility: hidden;
+  transition: opacity 0.35s ease, transform 0.35s ease, visibility 0s linear 0.35s;
+}
+
+.panel.active {
+  position: relative;
+  opacity: 1;
+  transform: none;
+  visibility: visible;
+  transition: opacity 0.5s ease 0.12s, transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1) 0.12s, visibility 0s;
+}
+
+.panel ul {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.panel li {
+  position: relative;
+  padding-left: 18px;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--grey-700);
+}
+
+.panel li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.7em;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--grey-700);
+}
+
+.note {
+  margin-top: 20px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--grey-600);
+}
+
+.note a {
+  color: var(--blue-600);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* Reduced motion: no autoplay; the active tab simply shows a full line */
+@media (prefers-reduced-motion: reduce) {
+  .fill {
+    transform: none;
+  }
+}
+
+@media (max-width: 767px) {
+  .section {
+    padding-block: 56px 64px;
+  }
+
+  /* Tabs scroll sideways instead of squeezing */
+  .tablist {
+    display: flex;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .tablist::-webkit-scrollbar {
+    display: none;
+  }
+
+  .tab {
+    flex: 0 0 auto;
+    padding: 16px 18px;
+    font-size: 13px;
+    white-space: nowrap;
+  }
+
+  .panel {
+    padding: 20px;
+  }
+
+  .panel li {
+    font-size: 15px;
+  }
+}

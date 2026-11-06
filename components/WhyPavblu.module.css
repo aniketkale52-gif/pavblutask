@@ -1,0 +1,114 @@
+.section {
+  padding-block: 96px 40px;
+}
+
+/* 4 × 4 bento grid, matching the Figma frame:
+   row 1: intro (2 cols) · Safety card · bottle art
+   row 2: PFS card · Support card · syringe art · Coverage card (+ tag) */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 20px;
+  align-items: start;
+}
+
+.intro {
+  grid-column: 1 / span 2;
+}
+
+/* Decorative tiles: light-grey icons sized to the square grid cell, like the Figma frame */
+.deco {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1 / 1;
+  color: #e4e7eb;
+  pointer-events: none;
+}
+
+.bottle svg {
+  width: auto;
+  height: 92%;
+}
+
+.syringe svg {
+  width: 88%;
+  height: 88%;
+}
+
+/* Coverage card + Q-Code strip = one shape */
+.coverage {
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--radius-md);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+/* The card keeps all its rounded corners and sits on top of the strip */
+.coverage .coverageCard {
+  z-index: 1;
+}
+
+/* The unit lifts as a whole, so the card never separates from the strip */
+.coverage .coverageCard:hover,
+.coverage .coverageCard:focus-visible {
+  transform: none;
+  box-shadow: none;
+}
+
+@media (hover: hover) {
+  .coverage:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 18px 40px rgba(1, 7, 41, 0.22);
+  }
+}
+
+.coverage:focus-within {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 40px rgba(1, 7, 41, 0.22);
+}
+
+/* Strip tucks under the card's rounded bottom corners (tray look) */
+.tag {
+  position: relative;
+  margin: calc(-1 * var(--radius-md)) 0 0;
+  padding: calc(9px + var(--radius-md)) 16px 10px;
+  border-radius: 0 0 var(--radius-md) var(--radius-md);
+  background: var(--blue-100);
+  color: var(--navy-600);
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-align: center;
+}
+
+/* Tablet: 2 columns, decorative tiles hidden */
+@media (max-width: 1023px) {
+  .section {
+    padding-block: 72px 32px;
+  }
+
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .intro {
+    grid-column: 1 / -1;
+    margin-bottom: 8px;
+  }
+
+  .deco {
+    display: none;
+  }
+}
+
+/* Mobile: single column */
+@media (max-width: 639px) {
+  .section {
+    padding-block: 56px 24px;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+}
