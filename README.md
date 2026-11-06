@@ -15,7 +15,7 @@ components/
   ConceptBar        "Redesign concept" notice
   Header            Logo, pill nav, mega-menu card, FOR PATIENTS button, mobile menu card
   navData.tsx       Menu sections, sub-pages, quick links and menu line icons
-  Hero              Sky hero, headline, bouncing vial + shadow, lead copy
+  Hero              Sky hero, headline, hovering vial + soft shadow, lead copy
   WhyPavblu         Bento grid: intro + 4 Link Cards + decorative art
   LinkCard          Reusable card (blue / navy), hover arrow
   Stats             4 proof points
